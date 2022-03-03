@@ -4,9 +4,7 @@
 ## Cloud Developer Nanodegree Program
 ### Udagram (Microservices) app
 
-## Getting Start
-
-### Purple
+## Getting Started
 
 ### Requirements
 
