@@ -1,98 +1,24 @@
-# Udagram Microservices
-Antonette Caldwell Udacity Cloud Developer Nanogree program
+> This project is currently a work in progress, I have to migrate and update the packages as well as making the docker images smaller. They were too large, coming in at 1GB for just a simple image rest api.
 
-The url to the project: https://github.com/pullmana8/Project-3-Udagram-Microservice
+# Udacity
+## Cloud Developer Nanodegree Program
+### Udagram (Microservices) app
 
-# Getting Started
+## Getting Start
 
-## Purpose
-To design, deploy and operate a cloud native photo sharing application
+### Purple
 
-## Prerequisites
-You will need to have the following packages installed:
-* Docker
-* AWS CLI
-* Eksctl
-* Kubectl
+### Requirements
 
-## Setup Docker Environment
+1. Kubectl
+2. Docker
+3. eksctl
+4. AWS CLI
 
-![Image of Docker Compose](screenshots/docker-compose-build.png)
+### Docker usage
 
-![Image of Docker Compose up](screenshots/docker-compose-up.png)
+`docker build . -t <DOCKER_USERNAME>/reverseproxy`
 
-![Docker Hub Images](screenshots/dockerhub.png)
+`docker-compose -f deployment/docker/docker-compose-build.yaml build`
 
-## Create a Kubernetes Cluster on Amazon EKS with eksctl
-```
-eksctl create cluster \ 
---name "ClusterName" \
---version 1.14 \
---nodegroup-name standard-workers \
---node-type t3.medium \
---nodes 3 \
---nodes-min 1 \
---nodes-max 4 \
---node-ami auto
-```
-
-![Eksctl Applied](screenshots/eksctl.png)
-
-## Create Kubernets Components (Configmaps and Secrets)
-Encrypt database user and password
-```
-echo $POSTGRES_USERNAME | base64 &&  echo $POSTGRES_PASSWORD | base64
-```
-
-Encrypt aws files using base64
-```
-cat ~/.aws/credentials | base64
-```
-
-Add the values to env-secret.yaml, aws-secret.yaml, and env-config.yaml
-
-## Setup local Kubernetes environment
-Load secret files first
-```
-kubectl apply -f aws-secret.yaml
-kubectl apply -f env-secret.yaml
-kubectl apply -f env-configmap.yaml
-```
-Apply the service next
-```
-kubectl apply -f reverseproxy-service.yaml
-kubectl apply -f backend-user-service.yaml
-kubectl apply -f backend-feed-service.yaml
-kubectl apply -f frontend-service.yaml
-```
-Apply the remaining files
-```
-kubectl apply -f .
-```
-
-![Kubectl apply](screenshots/kubectl-apply.png)
-
-![Kubectl apply rest](screenshots/local-kube.png)
-
-## Check Pod status
-```
-kubectl get all
-```
-
-![Kubectl get all](screenshots/kubectl-get-all.png)
-
-## Connect the services with port forwarding
-```
-kubectl port-forward service/frontend 8100:8100
-kubectl port-forward service/reverseproxy 8080:8080
-```
-
-![Port-forward on reverse proxy](screenshots/port-forward-reverseproxy.png)
-
-![Port-forward on frontend](screenshots/port-forward-frontend.png)
-
-## Successfull deployment to Amazon Kubernetes Cluster service
-![Image of AKS Cluster](screenshots/amazon-eks.png)
-
-## CI/CD with TravisCL
-![Travis CI passed](screenshots/travis-ci-passed.png)
+### Create a Kubernetes cluster with eksctl
